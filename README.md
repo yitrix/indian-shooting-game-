@@ -35,7 +35,8 @@ A complete, commit-ready **Godot 4 Mobile 3D** project featuring a third-person 
   - Saffron Pagri / Turban.
   - White Kurta with saffron sash / Kamarbandh.
   - Dhoti trousers.
-  - Carved wooden staff with brass ring adornment and projectile muzzle.
+  - Simple low-poly gun held in the right hand, with a visible barrel and firing muzzle.
+  - Low-poly face details: eyes, eyebrows, nose, and mouth.
 
 ### 🏛️ Low-Poly Indian Village Scene
 - **Sacred Banyan Tree (Bargad ka Ped)**:

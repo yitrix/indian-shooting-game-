@@ -25,10 +25,10 @@ extends CharacterBody3D
 @onready var camera_gimbal: Node3D = $CameraGimbal
 @onready var spring_arm: SpringArm3D = $CameraGimbal/SpringArm3D
 @onready var camera: Camera3D = $CameraGimbal/SpringArm3D/Camera3D
-@onready var muzzle: Marker3D = $Visuals/CharacterMesh/Muzzle
+@onready var muzzle: Marker3D = $Visuals/CharacterMesh/ArmRight/Gun/Muzzle
 @onready var arm_left: Node3D = $Visuals/CharacterMesh/ArmLeft
 @onready var arm_right: Node3D = $Visuals/CharacterMesh/ArmRight
-@onready var muzzle_flash: OmniLight3D = $Visuals/CharacterMesh/Muzzle/MuzzleFlash
+@onready var muzzle_flash: OmniLight3D = $Visuals/CharacterMesh/ArmRight/Gun/Muzzle/MuzzleFlash
 
 var external_input_vector: Vector2 = Vector2.ZERO
 var can_fire: bool = true

@@ -1,11 +1,9 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
 [ext_resource type="Material" path="res://assets/materials/mat_cloth_saffron.tres" id="2_saffron"]
 [ext_resource type="Material" path="res://assets/materials/mat_whitewash.tres" id="3_white"]
 [ext_resource type="Material" path="res://assets/materials/mat_wood.tres" id="4_wood"]
-[ext_resource type="Material" path="res://assets/materials/mat_brass.tres" id="5_brass"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.4
 height = 1.8
@@ -13,6 +11,19 @@ height = 1.8
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skin"]
 albedo_color = Color(0.82, 0.62, 0.48, 1)
 roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_face_light"]
+albedo_color = Color(0.96, 0.9, 0.78, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_face_dark"]
+albedo_color = Color(0.12, 0.075, 0.045, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gun"]
+albedo_color = Color(0.18, 0.2, 0.19, 1)
+metallic = 0.45
+roughness = 0.65
 
 [sub_resource type="BoxMesh" id="BoxMesh_torso"]
 material = ExtResource("3_white")
@@ -49,19 +60,49 @@ size = Vector3(0.16, 0.58, 0.16)
 material = SubResource("StandardMaterial3D_skin")
 size = Vector3(0.14, 0.16, 0.14)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_staff"]
-material = ExtResource("4_wood")
-top_radius = 0.04
-bottom_radius = 0.04
-height = 0.95
-radial_segments = 6
+[sub_resource type="SphereMesh" id="SphereMesh_eye"]
+material = SubResource("StandardMaterial3D_face_light")
+radius = 0.038
+height = 0.076
+radial_segments = 8
+rings = 4
 
-[sub_resource type="TorusMesh" id="TorusMesh_ring"]
-material = ExtResource("5_brass")
-inner_radius = 0.06
-outer_radius = 0.12
-rings = 8
-ring_segments = 6
+[sub_resource type="SphereMesh" id="SphereMesh_pupil"]
+material = SubResource("StandardMaterial3D_face_dark")
+radius = 0.016
+height = 0.032
+radial_segments = 6
+rings = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_brow"]
+material = SubResource("StandardMaterial3D_face_dark")
+size = Vector3(0.09, 0.025, 0.025)
+
+[sub_resource type="SphereMesh" id="SphereMesh_nose"]
+material = SubResource("StandardMaterial3D_skin")
+radius = 0.027
+height = 0.05
+radial_segments = 6
+rings = 3
+
+[sub_resource type="BoxMesh" id="BoxMesh_mouth"]
+material = SubResource("StandardMaterial3D_face_dark")
+size = Vector3(0.09, 0.018, 0.018)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gun_body"]
+material = SubResource("StandardMaterial3D_gun")
+size = Vector3(0.15, 0.1, 0.34)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gun_grip"]
+material = ExtResource("4_wood")
+size = Vector3(0.085, 0.19, 0.1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_gun_barrel"]
+material = SubResource("StandardMaterial3D_gun")
+top_radius = 0.035
+bottom_radius = 0.035
+height = 0.3
+radial_segments = 8
 
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 2
@@ -89,8 +130,40 @@ mesh = SubResource("BoxMesh_sash")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
 mesh = SubResource("BoxMesh_head")
 
+[node name="EyeLeft" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075, 0.015, 0.17)
+mesh = SubResource("SphereMesh_eye")
+
+[node name="EyeRight" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.015, 0.17)
+mesh = SubResource("SphereMesh_eye")
+
+[node name="PupilLeft" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075, 0.015, 0.204)
+mesh = SubResource("SphereMesh_pupil")
+
+[node name="PupilRight" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.015, 0.204)
+mesh = SubResource("SphereMesh_pupil")
+
+[node name="EyebrowLeft" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.075, 0.07, 0.17)
+mesh = SubResource("BoxMesh_brow")
+
+[node name="EyebrowRight" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.07, 0.17)
+mesh = SubResource("BoxMesh_brow")
+
+[node name="Nose" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.025, 0.19)
+mesh = SubResource("SphereMesh_nose")
+
+[node name="Mouth" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.095, 0.17)
+mesh = SubResource("BoxMesh_mouth")
+
 [node name="Turban" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21, 0)
 mesh = SubResource("CylinderMesh_turban")
 
 [node name="LegLeft" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
@@ -123,18 +196,24 @@ mesh = SubResource("BoxMesh_arm")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.52, 0)
 mesh = SubResource("BoxMesh_hand")
 
-[node name="Staff" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight"]
-transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 0.05, -0.35, -0.15)
-mesh = SubResource("CylinderMesh_staff")
+[node name="Gun" type="Node3D" parent="Visuals/CharacterMesh/ArmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.46, 0.12)
 
-[node name="BrassRing" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight/Staff"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.42, 0)
-mesh = SubResource("TorusMesh_ring")
+[node name="GunBody" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight/Gun"]
+mesh = SubResource("BoxMesh_gun_body")
 
-[node name="Muzzle" type="Marker3D" parent="Visuals/CharacterMesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.8)
+[node name="GunGrip" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight/Gun"]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, -0.12, -0.02)
+mesh = SubResource("BoxMesh_gun_grip")
 
-[node name="MuzzleFlash" type="OmniLight3D" parent="Visuals/CharacterMesh/Muzzle"]
+[node name="GunBarrel" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight/Gun"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.005, 0.31)
+mesh = SubResource("CylinderMesh_gun_barrel")
+
+[node name="Muzzle" type="Marker3D" parent="Visuals/CharacterMesh/ArmRight/Gun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.52)
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="Visuals/CharacterMesh/ArmRight/Gun/Muzzle"]
 visible = false
 light_color = Color(1, 0.7, 0.25, 1)
 light_energy = 4.0
