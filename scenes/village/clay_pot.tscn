@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/clay_pot.gd" id="1_pot"]
+[ext_resource type="Material" path="res://assets/materials/mat_terracotta.tres" id="2_terra"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_body"]
+material = ExtResource("2_terra")
+radius = 0.35
+height = 0.6
+radial_segments = 12
+rings = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_neck"]
+material = ExtResource("2_terra")
+top_radius = 0.2
+bottom_radius = 0.16
+height = 0.16
+radial_segments = 10
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pot"]
+height = 0.72
+radius = 0.36
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_shard"]
+albedo_color = Color(0.72, 0.32, 0.16, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_shard"]
+material = SubResource("StandardMaterial3D_shard")
+size = Vector3(0.12, 0.1, 0.05)
+
+[node name="ClayPot" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_pot")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("SphereMesh_body")
+
+[node name="Neck" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34, 0)
+mesh = SubResource("CylinderMesh_neck")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
+shape = SubResource("CylinderShape3D_pot")
+
+[node name="BreakParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+emitting = false
+amount = 16
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.95
+mesh = SubResource("BoxMesh_shard")
+direction = Vector3(0, 1, 0)
+spread = 75.0
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.6
+scale_amount_max = 1.3

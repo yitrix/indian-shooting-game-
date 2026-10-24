@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Material" path="res://assets/materials/mat_thatch.tres" id="1_thatch"]
+[ext_resource type="Material" path="res://assets/materials/mat_wood.tres" id="2_wood"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_haystack"]
+height = 2.6
+radius = 1.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mound"]
+material = ExtResource("1_thatch")
+top_radius = 0.2
+bottom_radius = 1.85
+height = 2.6
+radial_segments = 10
+
+[sub_resource type="BoxMesh" id="BoxMesh_bamboo_pole"]
+material = ExtResource("2_wood")
+size = Vector3(0.08, 2.8, 0.08)
+
+[node name="Haystack" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+shape = SubResource("CylinderShape3D_haystack")
+
+[node name="HayMound" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+mesh = SubResource("CylinderMesh_mound")
+
+[node name="SupportPole1" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0, 1, -1.2, 1.3, 0.6)
+mesh = SubResource("BoxMesh_bamboo_pole")
+
+[node name="SupportPole2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 1.2, 1.3, -0.4)
+mesh = SubResource("BoxMesh_bamboo_pole")

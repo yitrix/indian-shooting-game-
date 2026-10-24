@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Material" path="res://assets/materials/mat_wood.tres" id="1_wood"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cart"]
+size = Vector3(2.4, 1.8, 3.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bed"]
+material = ExtResource("1_wood")
+size = Vector3(1.7, 0.12, 2.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_side_plank"]
+material = ExtResource("1_wood")
+size = Vector3(0.08, 0.45, 2.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hitch_pole"]
+material = ExtResource("1_wood")
+size = Vector3(0.14, 0.14, 3.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_axle"]
+material = ExtResource("1_wood")
+top_radius = 0.08
+bottom_radius = 0.08
+height = 2.3
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+material = ExtResource("1_wood")
+top_radius = 0.85
+bottom_radius = 0.85
+height = 0.12
+radial_segments = 12
+
+[node name="BullockCart" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -0.4)
+shape = SubResource("BoxShape3D_cart")
+
+[node name="CartBed" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("BoxMesh_bed")
+
+[node name="SidePlankL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84, 1.15, 0)
+mesh = SubResource("BoxMesh_side_plank")
+
+[node name="SidePlankR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84, 1.15, 0)
+mesh = SubResource("BoxMesh_side_plank")
+
+[node name="HitchPole" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 0.55, -2.0)
+mesh = SubResource("BoxMesh_hitch_pole")
+
+[node name="Axle" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0, 0.85, 0)
+mesh = SubResource("CylinderMesh_axle")
+
+[node name="WheelLeft" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -1.05, 0.85, 0)
+mesh = SubResource("CylinderMesh_wheel")
+
+[node name="WheelRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 1.05, 0.85, 0)
+mesh = SubResource("CylinderMesh_wheel")

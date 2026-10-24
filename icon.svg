@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#c26330"/>
+  <!-- Sun / Arch shape -->
+  <circle cx="64" cy="54" r="26" fill="#f4b251"/>
+  <!-- Village Hut Dome / Temple Silhouette -->
+  <path d="M64 24 L86 58 L42 58 Z" fill="#d95328"/>
+  <path d="M38 58 L90 58 L96 98 L32 98 Z" fill="#ebd9b7"/>
+  <rect x="54" y="68" width="20" height="30" rx="10" fill="#6d3f22"/>
+  <circle cx="64" cy="20" r="4" fill="#fce588"/>
+  <!-- Ground -->
+  <path d="M0 102 Q64 94 128 102 L128 128 L0 128 Z" fill="#8c502b"/>
+</svg>

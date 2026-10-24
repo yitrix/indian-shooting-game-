@@ -1,0 +1,153 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Material" path="res://assets/materials/mat_cloth_saffron.tres" id="2_saffron"]
+[ext_resource type="Material" path="res://assets/materials/mat_whitewash.tres" id="3_white"]
+[ext_resource type="Material" path="res://assets/materials/mat_wood.tres" id="4_wood"]
+[ext_resource type="Material" path="res://assets/materials/mat_brass.tres" id="5_brass"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skin"]
+albedo_color = Color(0.82, 0.62, 0.48, 1)
+roughness = 0.85
+
+[sub_resource type="BoxMesh" id="BoxMesh_torso"]
+material = ExtResource("3_white")
+size = Vector3(0.55, 0.65, 0.32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sash"]
+material = ExtResource("2_saffron")
+size = Vector3(0.58, 0.14, 0.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_head"]
+material = SubResource("StandardMaterial3D_skin")
+size = Vector3(0.32, 0.34, 0.32)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_turban"]
+material = ExtResource("2_saffron")
+top_radius = 0.28
+bottom_radius = 0.25
+height = 0.22
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dhoti"]
+albedo_color = Color(0.74, 0.48, 0.32, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_leg"]
+material = SubResource("StandardMaterial3D_dhoti")
+size = Vector3(0.22, 0.72, 0.24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arm"]
+material = ExtResource("3_white")
+size = Vector3(0.16, 0.58, 0.16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hand"]
+material = SubResource("StandardMaterial3D_skin")
+size = Vector3(0.14, 0.16, 0.14)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_staff"]
+material = ExtResource("4_wood")
+top_radius = 0.04
+bottom_radius = 0.04
+height = 0.95
+radial_segments = 6
+
+[sub_resource type="TorusMesh" id="TorusMesh_ring"]
+material = ExtResource("5_brass")
+inner_radius = 0.06
+outer_radius = 0.12
+rings = 8
+ring_segments = 6
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="CharacterMesh" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+
+[node name="Torso" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("BoxMesh_torso")
+
+[node name="Sash" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+mesh = SubResource("BoxMesh_sash")
+
+[node name="Head" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+mesh = SubResource("BoxMesh_head")
+
+[node name="Turban" type="MeshInstance3D" parent="Visuals/CharacterMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("CylinderMesh_turban")
+
+[node name="LegLeft" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14, -0.52, 0)
+mesh = SubResource("BoxMesh_leg")
+
+[node name="LegRight" type="MeshInstance3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.14, -0.52, 0)
+mesh = SubResource("BoxMesh_leg")
+
+[node name="ArmLeft" type="Node3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, 0.38, 0)
+
+[node name="ArmMesh" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0)
+mesh = SubResource("BoxMesh_arm")
+
+[node name="HandMesh" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.52, 0)
+mesh = SubResource("BoxMesh_hand")
+
+[node name="ArmRight" type="Node3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, 0.38, 0)
+
+[node name="ArmMesh" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0)
+mesh = SubResource("BoxMesh_arm")
+
+[node name="HandMesh" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.52, 0)
+mesh = SubResource("BoxMesh_hand")
+
+[node name="Staff" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight"]
+transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, 0.05, -0.35, -0.15)
+mesh = SubResource("CylinderMesh_staff")
+
+[node name="BrassRing" type="MeshInstance3D" parent="Visuals/CharacterMesh/ArmRight/Staff"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.42, 0)
+mesh = SubResource("TorusMesh_ring")
+
+[node name="Muzzle" type="Marker3D" parent="Visuals/CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.3, -0.8)
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="Visuals/CharacterMesh/Muzzle"]
+visible = false
+light_color = Color(1, 0.7, 0.25, 1)
+light_energy = 4.0
+omni_range = 3.5
+
+[node name="CameraGimbal" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraGimbal"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.5, 0)
+spring_length = 4.2
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="CameraGimbal/SpringArm3D"]
+current = true
+fov = 68.0

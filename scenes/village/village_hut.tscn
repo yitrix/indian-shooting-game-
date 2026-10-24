@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Material" path="res://assets/materials/mat_mud_wall.tres" id="1_mud"]
+[ext_resource type="Material" path="res://assets/materials/mat_thatch.tres" id="2_thatch"]
+[ext_resource type="Material" path="res://assets/materials/mat_whitewash.tres" id="3_white"]
+[ext_resource type="Material" path="res://assets/materials/mat_wood.tres" id="4_wood"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hut"]
+height = 3.6
+radius = 2.4
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_walls"]
+material = ExtResource("1_mud")
+top_radius = 2.2
+bottom_radius = 2.2
+height = 2.2
+radial_segments = 14
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_trim"]
+material = ExtResource("3_white")
+top_radius = 2.23
+bottom_radius = 2.23
+height = 0.35
+radial_segments = 14
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_roof"]
+material = ExtResource("2_thatch")
+top_radius = 0.08
+bottom_radius = 2.7
+height = 2.4
+radial_segments = 14
+
+[sub_resource type="BoxMesh" id="BoxMesh_hut_door"]
+material = ExtResource("4_wood")
+size = Vector3(0.9, 1.7, 0.2)
+
+[node name="VillageHut" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("CylinderShape3D_hut")
+
+[node name="Walls" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+mesh = SubResource("CylinderMesh_walls")
+
+[node name="Trim" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_trim")
+
+[node name="ThatchRoof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 0)
+mesh = SubResource("CylinderMesh_roof")
+
+[node name="HutDoor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 2.15)
+mesh = SubResource("BoxMesh_hut_door")

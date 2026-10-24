@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/projectile.gd" id="1_script"]
+[ext_resource type="Material" path="res://assets/materials/mat_energy_glow.tres" id="2_glow"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_proj"]
+material = ExtResource("2_glow")
+radius = 0.16
+height = 0.32
+radial_segments = 12
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_proj"]
+radius = 0.25
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spark"]
+shading_mode = 0
+albedo_color = Color(1, 0.8, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_spark"]
+material = SubResource("StandardMaterial3D_spark")
+size = Vector3(0.08, 0.08, 0.08)
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_proj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.65, 0.2, 1)
+light_energy = 1.5
+omni_range = 3.0
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_proj")
+
+[node name="TrailParticles" type="CPUParticles3D" parent="."]
+amount = 14
+lifetime = 0.3
+mesh = SubResource("BoxMesh_spark")
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.2
+initial_velocity_max = 0.8
+scale_amount_min = 0.4
+scale_amount_max = 0.9
+
+[node name="ImpactParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.45
+one_shot = true
+explosiveness = 0.95
+mesh = SubResource("BoxMesh_spark")
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 2.5
+initial_velocity_max = 5.5
+scale_amount_min = 0.5
+scale_amount_max = 1.2

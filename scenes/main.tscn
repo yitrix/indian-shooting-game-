@@ -1,0 +1,170 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/main.gd" id="1_main"]
+[ext_resource type="Material" path="res://assets/materials/mat_ground_dirt.tres" id="2_dirt"]
+[ext_resource type="Material" path="res://assets/materials/mat_foliage.tres" id="3_foliage"]
+[ext_resource type="Material" path="res://assets/materials/mat_stone.tres" id="4_stone"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/virtual_controls.tscn" id="6_controls"]
+[ext_resource type="PackedScene" path="res://scenes/village/banyan_tree.tscn" id="7_banyan"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_well.tscn" id="8_well"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_house.tscn" id="9_house"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_hut.tscn" id="10_hut"]
+[ext_resource type="PackedScene" path="res://scenes/village/charpai.tscn" id="11_charpai"]
+[ext_resource type="PackedScene" path="res://scenes/village/bullock_cart.tscn" id="12_cart"]
+[ext_resource type="PackedScene" path="res://scenes/village/haystack.tscn" id="13_haystack"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_shrine.tscn" id="14_shrine"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_boundary.tscn" id="15_fence"]
+[ext_resource type="PackedScene" path="res://scenes/village/clay_pot.tscn" id="16_pot"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_env"]
+sky_top_color = Color(0.42, 0.65, 0.88, 1)
+sky_horizon_color = Color(0.92, 0.78, 0.62, 1)
+ground_bottom_color = Color(0.55, 0.42, 0.30, 1)
+ground_horizon_color = Color(0.85, 0.72, 0.58, 1)
+sun_angle_max = 35.0
+
+[sub_resource type="Sky" id="Sky_env"]
+sky_material = SubResource("ProceduralSkyMaterial_env")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_env")
+ambient_light_source = 2
+ambient_light_color = Color(0.88, 0.80, 0.70, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.5
+glow_bloom = 0.15
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+material = ExtResource("2_dirt")
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_path"]
+albedo_color = Color(0.80, 0.66, 0.48, 1)
+roughness = 0.95
+
+[sub_resource type="BoxMesh" id="BoxMesh_path"]
+material = SubResource("StandardMaterial3D_path")
+size = Vector3(8, 0.05, 34)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.819152, -0.40558, 0.40558, 0, 0.707107, 0.707107, -0.573576, -0.579228, 0.579228, 0, 20, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 1.35
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_ground")
+
+[node name="VillagePath" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("BoxMesh_path")
+
+[node name="VillageCenter" type="Node3D" parent="."]
+
+[node name="BanyanTree" parent="VillageCenter" instance=ExtResource("7_banyan")]
+
+[node name="VillageWell" parent="VillageCenter" instance=ExtResource("8_well")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 5)
+
+[node name="Houses" type="Node3D" parent="."]
+
+[node name="HouseNorthWest" parent="Houses" instance=ExtResource("9_house")]
+transform = Transform3D(0.906308, 0, 0.422618, 0, 1, 0, -0.422618, 0, 0.906308, -12, 0, -8)
+
+[node name="HouseNorthEast" parent="Houses" instance=ExtResource("9_house")]
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, 11, 0, -6)
+
+[node name="HouseSouthWest" parent="Houses" instance=ExtResource("9_house")]
+transform = Transform3D(-0.766044, 0, 0.642788, 0, 1, 0, -0.642788, 0, -0.766044, -10, 0, 14)
+
+[node name="Huts" type="Node3D" parent="."]
+
+[node name="HutEast" parent="Huts" instance=ExtResource("10_hut")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 12, 0, 8)
+
+[node name="HutSouthEast" parent="Huts" instance=ExtResource("10_hut")]
+transform = Transform3D(-0.939693, 0, 0.34202, 0, 1, 0, -0.34202, 0, -0.939693, 6, 0, 16)
+
+[node name="Shrine" parent="." instance=ExtResource("14_shrine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+
+[node name="VillageProps" type="Node3D" parent="."]
+
+[node name="BullockCart" parent="VillageProps" instance=ExtResource("12_cart")]
+transform = Transform3D(0.939693, 0, -0.34202, 0, 1, 0, 0.34202, 0, 0.939693, 6.5, 0, -2.5)
+
+[node name="Charpai1" parent="VillageProps" instance=ExtResource("11_charpai")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -10.5, 0, -4.5)
+
+[node name="Charpai2" parent="VillageProps" instance=ExtResource("11_charpai")]
+transform = Transform3D(0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, 0.5, 3.5, 0, 3.2)
+
+[node name="Haystack1" parent="VillageProps" instance=ExtResource("13_haystack")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -12)
+
+[node name="Haystack2" parent="VillageProps" instance=ExtResource("13_haystack")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 4)
+
+[node name="Fences" type="Node3D" parent="VillageProps"]
+
+[node name="Fence1" parent="VillageProps/Fences" instance=ExtResource("15_fence")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -14, 0, -1)
+
+[node name="Fence2" parent="VillageProps/Fences" instance=ExtResource("15_fence")]
+transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, 13, 0, 2)
+
+[node name="Fence3" parent="VillageProps/Fences" instance=ExtResource("15_fence")]
+transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 9, 0, 11)
+
+[node name="ClayPots" type="Node3D" parent="VillageProps"]
+
+[node name="ClayPot1" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0, 4.2)
+
+[node name="ClayPot2" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -8.5, 0, 6.0)
+
+[node name="ClayPot3" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -6.0, 0, 6.4)
+
+[node name="ClayPot4" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0.65, 1.2)
+
+[node name="ClayPot5" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(0.85, 0, 0, 0, 0.85, 0, 0, 0, 0.85, -2.5, 0.65, 2.0)
+
+[node name="ClayPot6" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0.35, -5.2)
+
+[node name="ClayPot7" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(0.95, 0, 0, 0, 0.95, 0, 0, 0, 0.95, 10.2, 0.35, -3.8)
+
+[node name="ClayPot8" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, -13.0)
+
+[node name="Player" parent="." instance=ExtResource("5_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="VirtualControls" parent="." instance=ExtResource("6_controls")]
