@@ -1,4 +1,4 @@
-# 🌾 Rampur: Godot 4 Mobile 3D Indian Village
+# 🌾 Amrai: Godot 4 Mobile 3D Indian Village
 
 A complete, commit-ready **Godot 4 Mobile 3D** project featuring a third-person player controller, intuitive mobile touch controls (left virtual joystick, right-side camera drag zone, action fire button), and a stylized low-poly Indian village environment.
 
