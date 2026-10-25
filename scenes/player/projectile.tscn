@@ -1,17 +1,28 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/projectile.gd" id="1_script"]
-[ext_resource type="Material" path="res://assets/materials/mat_energy_glow.tres" id="2_glow"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_proj"]
-material = ExtResource("2_glow")
-radius = 0.16
-height = 0.32
-radial_segments = 12
-rings = 6
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bullet"]
+albedo_color = Color(0.2, 0.22, 0.2, 1)
+metallic = 0.7
+roughness = 0.35
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bullet"]
+material = SubResource("StandardMaterial3D_bullet")
+top_radius = 0.045
+bottom_radius = 0.045
+height = 0.16
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bullet_tip"]
+material = SubResource("StandardMaterial3D_bullet")
+top_radius = 0.0
+bottom_radius = 0.05
+height = 0.1
+radial_segments = 8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_proj"]
-radius = 0.25
+radius = 0.07
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_spark"]
 shading_mode = 0
@@ -24,17 +35,24 @@ size = Vector3(0.08, 0.08, 0.08)
 [node name="Projectile" type="Node3D"]
 script = ExtResource("1_script")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_proj")
+[node name="BulletMesh" type="Node3D" parent="."]
+
+[node name="BulletBody" type="MeshInstance3D" parent="BulletMesh"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0.02)
+mesh = SubResource("CylinderMesh_bullet")
+
+[node name="BulletTip" type="MeshInstance3D" parent="BulletMesh"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, -0.12)
+mesh = SubResource("CylinderMesh_bullet_tip")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(1, 0.65, 0.2, 1)
-light_energy = 1.5
-omni_range = 3.0
+light_color = Color(1, 0.58, 0.22, 1)
+light_energy = 0.55
+omni_range = 1.2
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_proj")

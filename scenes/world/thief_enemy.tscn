@@ -1,0 +1,124 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/thief_enemy.gd" id="1_thief"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_thief"]
+radius = 0.34
+height = 1.65
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clothes"]
+albedo_color = Color(0.2, 0.22, 0.24, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scarf"]
+albedo_color = Color(0.62, 0.12, 0.08, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_skin"]
+albedo_color = Color(0.55, 0.34, 0.23, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mask"]
+albedo_color = Color(0.09, 0.075, 0.07, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_health_back"]
+shading_mode = 0
+albedo_color = Color(0.12, 0.08, 0.07, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_health_fill"]
+shading_mode = 0
+albedo_color = Color(0.2, 0.82, 0.18, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_health"]
+material = SubResource("StandardMaterial3D_health_back")
+size = Vector3(0.72, 0.09, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_health_fill"]
+material = SubResource("StandardMaterial3D_health_fill")
+size = Vector3(0.66, 0.055, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+material = SubResource("StandardMaterial3D_clothes")
+size = Vector3(0.42, 0.62, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_scarf"]
+material = SubResource("StandardMaterial3D_scarf")
+size = Vector3(0.45, 0.13, 0.07)
+
+[sub_resource type="BoxMesh" id="BoxMesh_head"]
+material = SubResource("StandardMaterial3D_skin")
+size = Vector3(0.3, 0.32, 0.29)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mask"]
+material = SubResource("StandardMaterial3D_mask")
+size = Vector3(0.3, 0.12, 0.035)
+
+[sub_resource type="BoxMesh" id="BoxMesh_turban"]
+material = SubResource("StandardMaterial3D_scarf")
+size = Vector3(0.34, 0.13, 0.32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arm"]
+material = SubResource("StandardMaterial3D_clothes")
+size = Vector3(0.14, 0.46, 0.16)
+
+[sub_resource type="BoxMesh" id="BoxMesh_leg"]
+material = SubResource("StandardMaterial3D_mask")
+size = Vector3(0.16, 0.42, 0.18)
+
+[node name="ThiefEnemy" type="CharacterBody3D"]
+process_mode = 1
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_thief")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.83, 0)
+shape = SubResource("CapsuleShape3D_thief")
+
+[node name="Visuals" type="Node3D" parent="."]
+position = Vector3(0, 0.83, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Visuals"]
+mesh = SubResource("BoxMesh_body")
+
+[node name="Scarf" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.2, -0.17)
+mesh = SubResource("BoxMesh_scarf")
+
+[node name="Head" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.52, 0)
+mesh = SubResource("BoxMesh_head")
+
+[node name="Mask" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.48, -0.16)
+mesh = SubResource("BoxMesh_mask")
+
+[node name="Turban" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0, 0.71, 0)
+mesh = SubResource("BoxMesh_turban")
+
+[node name="ArmLeft" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.27, 0.04, 0)
+mesh = SubResource("BoxMesh_arm")
+
+[node name="ArmRight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.27, 0.04, 0)
+mesh = SubResource("BoxMesh_arm")
+
+[node name="LegLeft" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(-0.12, -0.43, 0)
+mesh = SubResource("BoxMesh_leg")
+
+[node name="LegRight" type="MeshInstance3D" parent="Visuals"]
+position = Vector3(0.12, -0.43, 0)
+mesh = SubResource("BoxMesh_leg")
+
+[node name="HealthBar" type="Node3D" parent="Visuals"]
+position = Vector3(0, 0.98, 0)
+
+[node name="Background" type="MeshInstance3D" parent="Visuals/HealthBar"]
+mesh = SubResource("BoxMesh_health")
+
+[node name="Fill" type="MeshInstance3D" parent="Visuals/HealthBar"]
+mesh = SubResource("BoxMesh_health_fill")

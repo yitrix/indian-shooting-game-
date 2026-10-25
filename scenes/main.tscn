@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3]
+[gd_scene load_steps=24 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/main.gd" id="1_main"]
 [ext_resource type="Material" path="res://assets/materials/mat_ground_dirt.tres" id="2_dirt"]
@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" path="res://scenes/village/village_shrine.tscn" id="14_shrine"]
 [ext_resource type="PackedScene" path="res://scenes/village/village_boundary.tscn" id="15_fence"]
 [ext_resource type="PackedScene" path="res://scenes/village/clay_pot.tscn" id="16_pot"]
+[ext_resource type="PackedScene" path="res://scenes/world/thief_enemy.tscn" id="17_thief"]
+[ext_resource type="PackedScene" path="res://scenes/village/village_life.tscn" id="18_life"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_env"]
 sky_top_color = Color(0.42, 0.65, 0.88, 1)
@@ -140,6 +142,8 @@ transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 
 
 [node name="ClayPots" type="Node3D" parent="VillageProps"]
 
+[node name="VillageLife" parent="VillageProps" instance=ExtResource("18_life")]
+
 [node name="ClayPot1" parent="VillageProps/ClayPots" instance=ExtResource("16_pot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2, 0, 4.2)
 
@@ -166,5 +170,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, -13.0)
 
 [node name="Player" parent="." instance=ExtResource("5_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+
+[node name="Thieves" type="Node3D" parent="."]
+
+[node name="ThiefMarketWest" parent="Thieves" instance=ExtResource("17_thief")]
+position = Vector3(-6, 0, -3)
+
+[node name="ThiefMarketEast" parent="Thieves" instance=ExtResource("17_thief")]
+position = Vector3(6, 0, -3)
+patrol_offset_a = Vector3(0, 0, -3)
+patrol_offset_b = Vector3(0, 0, 3)
+
+[node name="ThiefMarketNorth" parent="Thieves" instance=ExtResource("17_thief")]
+position = Vector3(0, 0, -6)
+patrol_offset_a = Vector3(-3, 0, 0)
+patrol_offset_b = Vector3(3, 0, 0)
 
 [node name="VirtualControls" parent="." instance=ExtResource("6_controls")]

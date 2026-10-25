@@ -15,13 +15,16 @@ A complete, commit-ready **Godot 4 Mobile 3D** project featuring a third-person 
 - **Right-Side Camera Drag Zone (`TouchLookZone`)**:
   - Full-featured camera gimbal controller (Yaw on gimbal, Pitch on spring arm).
   - Pitch angle clamped between `-62°` (looking down) and `+32°` (looking up).
-  - Smart touch exclusion system that prevents camera jumps when tapping the Fire Button.
+  - Smart touch exclusion system that prevents camera jumps when tapping the Fire Button, Reload button, or aim reticle.
+- **Movable Aim Reticle (`AimReticle`)**:
+  - Drag the on-screen reticle to choose where bullets are aimed; the Fire button shoots through its current position.
 - **Action / Fire Button (`FireButton`)**:
   - Stylized circular action button at bottom-right with custom procedural flame glyph.
   - Multi-touch isolated; animates on press (scale down, glow pulse).
-  - Triggers player projectile casting and integrates with Godot's `fire` input action.
+  - Fires a low-poly bullet toward the center of the camera aim, with muzzle flash and gunshot audio.
+  - Magazine ammo is shown on-screen; the nearby reload button and desktop `R` key refill it.
 - **Desktop Fallback**:
-  - Fully playable on PC/Mac with WASD keys, right mouse drag / Alt-click drag, and Spacebar.
+  - Fully playable on PC/Mac with WASD keys, right mouse drag / Alt-click drag, Spacebar or left-click to fire, and `R` to reload.
 
 ### 👤 Third-Person Player Controller
 - Camera-relative directional movement: moves forward, backward, left, and right relative to the camera gimbal.
@@ -30,7 +33,7 @@ A complete, commit-ready **Godot 4 Mobile 3D** project featuring a third-person 
   - Subtle vertical body bobbing during movement.
   - Arm swinging on walk cycle.
   - Forward velocity lean into turns.
-  - Firing recoil and muzzle flash effects.
+  - Firing recoil, muzzle flash, gunshot sound, and limited-ammo reload behavior.
 - Stylized low-poly Indian character:
   - Saffron Pagri / Turban.
   - White Kurta with saffron sash / Kamarbandh.
@@ -55,6 +58,19 @@ A complete, commit-ready **Godot 4 Mobile 3D** project featuring a third-person 
   - **Village Shrine (Mandir)**: Whitewashed stone plinth, tiered shikhara, and a fluttering saffron flag (**Dhwaja**).
   - **Fences**: Wooden split-rail boundary fences enclosing courtyards.
   - **Destructible Clay Pots (Matkas)**: Scattered near the well, under verandahs, and by the square. Shooting them triggers clay shard particle bursts and updates the on-screen shattered pot counter!
+  - Swept bullet collisions damage targets that implement `hit(damage, direction)` or `take_damage(damage)`, including enemy targets.
+- **Thief Enemies**:
+  - Three low-poly thieves patrol around the market and chase Amit when he comes within 15 meters.
+  - They attack at melee range, reduce player health, and show their own health bars.
+  - Defeated thieves play a fall-and-shrink death animation before disappearing.
+- **Neta Ji Boss Encounter**:
+  - Defeating two thieves reveals the fictional, corrupt politician Neta Ji and two armed bodyguards near the village square.
+  - Neta Ji delivers rotating satirical lines while the bodyguards fire bullets at Amit.
+  - Defeating Neta Ji completes the level and displays a Mission Complete screen.
+- **Village Life and Game Boundaries**:
+  - Low-poly cows, villagers, a car, and an auto-rickshaw populate the village.
+  - Physical perimeter barriers stop the player and thieves leaving the map; a varied hedge and tree line disguises the boundary.
+  - Pause/resume and restart controls are available in-game. When Amit's health reaches zero, gameplay pauses and a restart menu appears.
 
 ---
 
@@ -66,12 +82,17 @@ my-first-app/
 ├── icon.svg                          # Stylized Indian village icon
 ├── .gitignore                        # Godot 4 gitignore (.godot/, .import/, etc.)
 ├── README.md                         # Project documentation
+├── assets/
+│   └── audio/
+│       └── gunshot.wav               # Short synthesized gunshot sound
 │
 ├── scenes/
 │   ├── main.tscn                     # Main game world scene
 │   ├── player/
 │   │   ├── player.tscn               # CharacterBody3D, SpringArm3D, camera gimbal, visuals
-│   │   └── projectile.tscn           # Magic projectile with trail & impact particles
+│   │   └── projectile.tscn           # Bullet with trail, swept hits, and impact particles
+│   ├── world/
+│   │   └── thief_enemy.tscn          # Patrol/chase melee enemy with health bar
 │   ├── ui/
 │   │   ├── virtual_controls.tscn     # CanvasLayer HUD with joystick, look zone, fire button
 │   │   ├── virtual_joystick.tscn     # Mobile left virtual joystick

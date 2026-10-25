@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/virtual_controls.gd" id="1_controls"]
 [ext_resource type="PackedScene" path="res://scenes/ui/virtual_joystick.tscn" id="2_joystick"]
 [ext_resource type="PackedScene" path="res://scenes/ui/touch_look_zone.tscn" id="3_look"]
 [ext_resource type="PackedScene" path="res://scenes/ui/fire_button.tscn" id="4_fire"]
+[ext_resource type="Script" path="res://scripts/ui/aim_reticle.gd" id="5_aim"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_help"]
 bg_color = Color(0.1, 0.08, 0.06, 0.88)
@@ -18,6 +19,7 @@ corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
 [node name="VirtualControls" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_controls")
 
 [node name="RightTouchArea" type="Control" parent="."]
@@ -77,25 +79,142 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Crosshair" type="CenterContainer" parent="HUD"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("5_aim")
 
 [node name="ReticleDot" type="ColorRect" parent="HUD/Crosshair"]
 custom_minimum_size = Vector2(6, 6)
 layout_mode = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0.75)
+
+[node name="AmmoLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -292.0
+offset_right = -24.0
+offset_bottom = -262.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.92, 0.75, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 19
+text = "Ammo: 12 / 12"
+horizontal_alignment = 2
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="HealthLabel" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -326.0
+offset_right = -24.0
+offset_bottom = -296.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.58, 0.48, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 19
+text = "Health: 100 / 100"
+horizontal_alignment = 2
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="BossHealthLabel" type="Label" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 58.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.56, 0.38, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 20
+text = "Neta Ji: 300 / 300"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="BossTauntLabel" type="Label" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 80.0
+offset_top = 92.0
+offset_right = -80.0
+offset_bottom = 132.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.91, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.95)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 17
+text = "NETA JI: My promises are renewable. Results are still pending."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2
+
+[node name="ReloadButton" type="Button" parent="HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -164.0
+offset_top = -254.0
+offset_right = -24.0
+offset_bottom = -202.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_font_sizes/font_size = 16
+text = "RELOAD"
+mouse_filter = 0
+
+[node name="PauseButton" type="Button" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -212.0
+offset_top = 16.0
+offset_right = -120.0
+offset_bottom = 50.0
+grow_horizontal = 0
+text = "⏸ Pause"
 
 [node name="TopBar" type="HBoxContainer" parent="HUD"]
 layout_mode = 1
@@ -158,6 +277,166 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_help")
 
+[node name="PauseMenu" type="Panel" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -150.0
+offset_right = 210.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_help")
+
+[node name="PauseTitle" type="Label" parent="HUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.98, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 28
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="HUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -18.0
+offset_right = 100.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESUME"
+
+[node name="PauseRestartButton" type="Button" parent="HUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 48.0
+offset_right = 100.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESTART"
+
+[node name="GameOverPanel" type="Panel" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -150.0
+offset_right = 230.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_help")
+
+[node name="GameOverTitle" type="Label" parent="HUD/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 34.0
+offset_bottom = 82.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.48, 0.35, 1)
+theme_override_font_sizes/font_size = 30
+text = "AMIT WAS CAUGHT!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOverRestartButton" type="Button" parent="HUD/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = 10.0
+offset_right = 115.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESTART VILLAGE"
+
+[node name="MissionCompletePanel" type="Panel" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -170.0
+offset_right = 250.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_help")
+
+[node name="MissionTitle" type="Label" parent="HUD/MissionCompletePanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 46.0
+offset_bottom = 98.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.98, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 34
+text = "MISSION COMPLETE!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MissionMessage" type="Label" parent="HUD/MissionCompletePanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 112.0
+offset_bottom = 154.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.82, 1)
+theme_override_font_sizes/font_size = 18
+text = "Neta Ji's racket is over. The village is safe!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MissionRestartButton" type="Button" parent="HUD/MissionCompletePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.0
+offset_top = 56.0
+offset_right = 115.0
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAY AGAIN"
+
 [node name="Margin" type="MarginContainer" parent="HUD/HelpPanel"]
 layout_mode = 1
 anchors_preset = 15
@@ -186,8 +465,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "• Left Joystick: Move character relative to camera
 • Right Touch Drag: Rotate camera gimbal (Yaw & Pitch)
-• Fire Button (Bottom-Right): Cast projectile at clay pots
-• Desktop Fallback: WASD to move, Right-click drag to look, Space to fire"
+• Fire Button (Bottom-Right): Shoot in the camera aiming direction
+• Reload button / R: Refill the magazine
+• Thieves chase nearby players and attack at close range
+• Defeat two thieves to reveal Neta Ji and his two armed bodyguards
+• Pause button / Esc: Pause, resume, or restart
+• Desktop Fallback: WASD to move, Right-click drag to look, Space / left-click to fire, R to reload"
 autowrap_mode = 2
 
 [node name="Hint" type="Label" parent="HUD/HelpPanel/Margin/VBox"]

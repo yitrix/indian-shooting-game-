@@ -1,0 +1,259 @@
+[gd_scene load_steps=19 format=3]
+
+[sub_resource type="StandardMaterial3D" id="Mat_cow"]
+albedo_color = Color(0.88, 0.84, 0.72, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_cow_spots"]
+albedo_color = Color(0.22, 0.16, 0.11, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_skin"]
+albedo_color = Color(0.58, 0.37, 0.26, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_villager_cloth"]
+albedo_color = Color(0.24, 0.48, 0.36, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_villager_saffron"]
+albedo_color = Color(0.78, 0.36, 0.12, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_auto_body"]
+albedo_color = Color(0.1, 0.42, 0.3, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_car_body"]
+albedo_color = Color(0.57, 0.18, 0.1, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_glass"]
+albedo_color = Color(0.38, 0.67, 0.72, 1)
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="Mat_rubber"]
+albedo_color = Color(0.075, 0.07, 0.06, 1)
+roughness = 0.95
+
+[sub_resource type="SphereMesh" id="CowBody"]
+material = SubResource("Mat_cow")
+radius = 0.65
+height = 1.1
+radial_segments = 10
+rings = 6
+
+[sub_resource type="SphereMesh" id="CowHead"]
+material = SubResource("Mat_cow")
+radius = 0.32
+height = 0.58
+radial_segments = 8
+rings = 5
+
+[sub_resource type="SphereMesh" id="CowPatch"]
+material = SubResource("Mat_cow_spots")
+radius = 0.22
+height = 0.25
+radial_segments = 7
+rings = 4
+
+[sub_resource type="BoxMesh" id="HumanBody"]
+size = Vector3(0.42, 0.76, 0.3)
+
+[sub_resource type="SphereMesh" id="HumanHead"]
+material = SubResource("Mat_skin")
+radius = 0.19
+height = 0.36
+radial_segments = 8
+rings = 5
+
+[sub_resource type="BoxMesh" id="VehicleBody"]
+size = Vector3(1.75, 0.62, 2.8)
+
+[sub_resource type="BoxMesh" id="VehicleCab"]
+size = Vector3(1.48, 0.7, 1.15)
+
+[sub_resource type="BoxMesh" id="VehicleGlass"]
+material = SubResource("Mat_glass")
+size = Vector3(1.28, 0.45, 0.06)
+
+[sub_resource type="CylinderMesh" id="VehicleWheel"]
+material = SubResource("Mat_rubber")
+top_radius = 0.34
+bottom_radius = 0.34
+height = 0.18
+radial_segments = 10
+
+[node name="VillageLife" type="Node3D"]
+
+[node name="Cow1" type="Node3D" parent="."]
+position = Vector3(-16, 0, -11)
+
+[node name="Body" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("CowBody")
+
+[node name="Head" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(0, 0.92, -0.69)
+mesh = SubResource("CowHead")
+
+[node name="Patch" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(0.34, 1.05, -0.12)
+mesh = SubResource("CowPatch")
+
+[node name="Leg1" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(-0.38, 0.34, -0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg2" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(0.38, 0.34, -0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg3" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(-0.38, 0.34, 0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg4" type="MeshInstance3D" parent="Cow1"]
+position = Vector3(0.38, 0.34, 0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Cow2" type="Node3D" parent="."]
+position = Vector3(17, 0, 13)
+rotation = Vector3(0, 1.8, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(0, 0.9, 0)
+mesh = SubResource("CowBody")
+
+[node name="Head" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(0, 0.92, -0.69)
+mesh = SubResource("CowHead")
+
+[node name="Patch" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(-0.34, 1.05, 0.12)
+mesh = SubResource("CowPatch")
+
+[node name="Leg1" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(-0.38, 0.34, -0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg2" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(0.38, 0.34, -0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg3" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(-0.38, 0.34, 0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Leg4" type="MeshInstance3D" parent="Cow2"]
+position = Vector3(0.38, 0.34, 0.3)
+mesh = SubResource("HumanBody")
+scale = Vector3(0.42, 0.9, 0.45)
+
+[node name="Villager1" type="Node3D" parent="."]
+position = Vector3(-3.5, 0, 1)
+
+[node name="Body" type="MeshInstance3D" parent="Villager1"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("HumanBody")
+material_override = SubResource("Mat_villager_cloth")
+
+[node name="Head" type="MeshInstance3D" parent="Villager1"]
+position = Vector3(0, 1.48, 0)
+mesh = SubResource("HumanHead")
+
+[node name="Villager2" type="Node3D" parent="."]
+position = Vector3(4.5, 0, 2.5)
+rotation = Vector3(0, -1.1, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Villager2"]
+position = Vector3(0, 0.95, 0)
+mesh = SubResource("HumanBody")
+material_override = SubResource("Mat_villager_saffron")
+
+[node name="Head" type="MeshInstance3D" parent="Villager2"]
+position = Vector3(0, 1.48, 0)
+mesh = SubResource("HumanHead")
+
+[node name="AutoRickshaw" type="Node3D" parent="."]
+position = Vector3(4.5, 0, -5)
+rotation = Vector3(0, 1.57, 0)
+
+[node name="Body" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(0, 0.65, 0)
+mesh = SubResource("VehicleBody")
+material_override = SubResource("Mat_auto_body")
+
+[node name="Cab" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(0, 1.28, -0.22)
+mesh = SubResource("VehicleCab")
+material_override = SubResource("Mat_auto_body")
+
+[node name="Windshield" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(0, 1.3, -0.81)
+mesh = SubResource("VehicleGlass")
+
+[node name="WheelFrontLeft" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(-0.85, 0.35, -0.82)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelFrontRight" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(0.85, 0.35, -0.82)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelRearLeft" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(-0.85, 0.35, 0.82)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelRearRight" type="MeshInstance3D" parent="AutoRickshaw"]
+position = Vector3(0.85, 0.35, 0.82)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="Car" type="Node3D" parent="."]
+position = Vector3(11, 0, 14)
+rotation = Vector3(0, -0.65, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Car"]
+position = Vector3(0, 0.65, 0)
+mesh = SubResource("VehicleBody")
+material_override = SubResource("Mat_car_body")
+
+[node name="Cab" type="MeshInstance3D" parent="Car"]
+position = Vector3(0, 1.18, 0.05)
+mesh = SubResource("VehicleCab")
+material_override = SubResource("Mat_car_body")
+
+[node name="Windshield" type="MeshInstance3D" parent="Car"]
+position = Vector3(0, 1.2, -0.56)
+mesh = SubResource("VehicleGlass")
+
+[node name="WheelFrontLeft" type="MeshInstance3D" parent="Car"]
+position = Vector3(-0.9, 0.35, -0.85)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelFrontRight" type="MeshInstance3D" parent="Car"]
+position = Vector3(0.9, 0.35, -0.85)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelRearLeft" type="MeshInstance3D" parent="Car"]
+position = Vector3(-0.9, 0.35, 0.85)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
+
+[node name="WheelRearRight" type="MeshInstance3D" parent="Car"]
+position = Vector3(0.9, 0.35, 0.85)
+rotation = Vector3(0, 0, 1.57)
+mesh = SubResource("VehicleWheel")
